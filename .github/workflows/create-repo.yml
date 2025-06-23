@@ -70,14 +70,18 @@ jobs:
 
       - name: Create replacer.yml
         run: |
+          cd ../$NEW_REPO
           echo "- from: lorem" > replacer.yml
           echo "  to: foobar" >> replacer.yml
 
       - name: Run plusminus-replacer
-        run: java -jar plusminus-replacer.java
+        run: |
+          cd ../$NEW_REPO
+          java -jar plusminus-replacer.jar
 
       - name: Push first commit to newly created repo
         run: |
+          cd ../$NEW_REPO
           rm plusminus-replacer.jar
           rm replacer.yml
           git config --global user.name "GitHub Actions Bot"
