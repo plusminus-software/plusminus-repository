@@ -40,6 +40,7 @@ jobs:
       OWNER: ${{ github.repository_owner }}
       NEW_REPO: ${{ github.event.inputs.new_repo_name }}
       CURRENT_REPO: ${{ github.event.repository.name }}
+      IS_NEW_REPO_PRIVATE: ${{ github.event.inputs.private }}
     steps:
       - name: Checkout template repository
         uses: actions/checkout@v3
@@ -68,12 +69,6 @@ jobs:
           cd ../$NEW_REPO
           wget https://github.com/plusminus-software/plusminus-replacer/releases/latest/download/plusminus-replacer.jar
 
-      - name: Create replacer.yml
-        run: |
-          cd ../$NEW_REPO
-          echo "- from: lorem" > replacer.yml
-          echo "  to: foobar" >> replacer.yml
-
       - name: Run plusminus-replacer
         run: |
           cd ../$NEW_REPO
@@ -83,7 +78,6 @@ jobs:
         run: |
           cd ../$NEW_REPO
           rm plusminus-replacer.jar
-          rm replacer.yml
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
           git add .
