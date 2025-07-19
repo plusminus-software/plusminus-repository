@@ -1,3 +1,5 @@
+- from: plusminus-repository
+  to: plusminus-newrepo
 - from: lorem
   to: replaced
 - from: public
