@@ -6,6 +6,9 @@ on:
       new_repo_name:
         description: 'Name of the new repository'
         required: true
+      new_repo_description:
+        description: 'The description of the new repository'
+        required: true
       private:
         description: 'Should the new repository be private? (true/false)'
         type: choice
@@ -22,6 +25,7 @@ jobs:
       GH_TOKEN: ${{ secrets.GH_PAT }}  # Personal Access Token with repo scope
       OWNER: ${{ github.repository_owner }}
       NEW_REPO: ${{ github.event.inputs.new_repo_name }}
+      NEW_REPO_DESCRIPTION: ${{ github.event.inputs.new_repo_description }}
       IS_NEW_REPO_PRIVATE: ${{ github.event.inputs.private }}
     steps:
       - name: Create new repository
@@ -39,6 +43,7 @@ jobs:
       GH_TOKEN: ${{ secrets.GH_PAT }}  # Personal Access Token with repo scope
       OWNER: ${{ github.repository_owner }}
       NEW_REPO: ${{ github.event.inputs.new_repo_name }}
+      NEW_REPO_DESCRIPTION: ${{ github.event.inputs.new_repo_description }}
       CURRENT_REPO: ${{ github.event.repository.name }}
       IS_NEW_REPO_PRIVATE: ${{ github.event.inputs.private }}
     steps:
