@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "Creating repository '$NEW_REPO' in the organization '$OWNER'"
           curl --fail-with-body -X POST -H "Authorization: token $GH_TOKEN" \
-            -d "{\"name\":\"$NEW_REPO\", \"description\":\"NEW_REPO_DESCRIPTION\", \"private\": $IS_NEW_REPO_PRIVATE}" \
+            -d "{\"name\":\"$NEW_REPO\", \"description\":\"$NEW_REPO_DESCRIPTION\", \"private\": $IS_NEW_REPO_PRIVATE}" \
             https://api.github.com/orgs/$OWNER/repos
           echo "Repository '$NEW_REPO' created successfully."
 
