@@ -1,5 +1,9 @@
-- from: lorem
-  to: replaced
-- from: public
-  to: private
-  if: ${IS_NEW_REPO_PRIVATE} == 'true'
+- from: plusminus-repository
+  to: ${NEW_REPO}
+- from: <artifactId>plusminus-parent</artifactId>
+  to: <artifactId>plusminus-parent-public</artifactId>
+  if: ${IS_NEW_REPO_PRIVATE} == 'false'
+- from: Plusminus Repository
+  to: ${NEW_REPO_FULL}
+- from: Plusminus Repository description
+  to: ${NEW_REPO_DESCRIPTION}
