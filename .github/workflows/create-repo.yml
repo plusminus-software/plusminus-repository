@@ -28,7 +28,7 @@ jobs:
       - name: Checkout template repository
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref_name }}
 
       - name: Export all workflow inputs as env vars
         shell: bash
@@ -55,7 +55,7 @@ jobs:
       - name: Checkout template repository
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref_name }}
 
       - name: Export all workflow inputs as env vars
         shell: bash
