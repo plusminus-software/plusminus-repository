@@ -4,4 +4,4 @@
   to: replaced
 - from: public
   to: private
-  if: ${IS_NEW_REPO_PRIVATE} == 'true'
+  if: ${REPOSITORY_PRIVATE} == 'true'
