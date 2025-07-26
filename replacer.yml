@@ -1,16 +1,13 @@
 - from: plusminus-repository
   to: ${REPOSITORY_NAME}
-  if: |
-    !PATH.includes('.git') && !PATH.includes('.idea') && !PATH.includes('replacer.yml')
+  if: "!PATH.includes('.git') && !PATH.includes('.idea')"
 
 - from: Plusminus Repository description
   to: ${REPOSITORY_DESCRIPTION}
-  if: |
-    !PATH.includes('replacer.yml')
 
 - from: <artifactId>plusminus-parent</artifactId>
   to: <artifactId>plusminus-parent-public</artifactId>
-  if: REPOSITORY_PRIVATE == 'false' && !PATH.includes('replacer.yml')
+  if: REPOSITORY_PRIVATE == 'false'
 
 - from: repository
   to: |
@@ -25,8 +22,6 @@
 - from: PlusminusRepository
   to: js:toStudlyCaps(REPOSITORY_NAME)
   scopes: [CONTENT, FILE_NAME]
-  if: |
-    !PATH.includes('replacer.yml')
 
 - from: Plusminus Repository
   to: |
@@ -34,5 +29,3 @@
     REPOSITORY_NAME.split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
-  if: |
-    !PATH.includes('replacer.yml')
