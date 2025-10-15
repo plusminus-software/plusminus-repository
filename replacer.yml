@@ -5,8 +5,12 @@
 - from: Plusminus Repository description
   to: ${REPOSITORY_DESCRIPTION}
 
-- from: <artifactId>plusminus-parent</artifactId>
-  to: <artifactId>plusminus-parent-public</artifactId>
+- from: |
+    <artifactId>plusminus-parent</artifactId>
+    <version>1.4-SNAPSHOT</version>
+  to: |
+    <artifactId>plusminus-parent-public</artifactId>
+    <version>1.0-SNAPSHOT</version>
   if: REPOSITORY_PRIVATE == 'false'
 
 - from: repository
