@@ -14,5 +14,10 @@ while IFS= read -r key; do
   value=$(jq -r --arg k "$key" '.[$k]' <<< "$GITHUB_EVENT_INPUTS_JSON")
   env_key=$(echo "$key" | tr '[:lower:]' '[:upper:]' | sed 's/[^A-Z0-9_]/_/g')
   echo "Exporting $env_key=$value"
-  echo "${env_key}=$value" >> "$GITHUB_ENV"
+  delimiter="ghadelimiter_$(openssl rand -hex 16)"
+  {
+    printf '%s<<%s\n' "$env_key" "$delimiter"
+    printf '%s\n' "$value"
+    printf '%s\n' "$delimiter"
+  } >> "$GITHUB_ENV"
 done < <(jq -r 'keys[]' <<< "$GITHUB_EVENT_INPUTS_JSON")

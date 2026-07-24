@@ -32,15 +32,21 @@ jobs:
 
       - name: Export all workflow inputs as env vars
         shell: bash
+        env:
+          GITHUB_EVENT_INPUTS_JSON: ${{ toJson(github.event.inputs) }}
         run: |
-          export GITHUB_EVENT_INPUTS_JSON='${{ toJson(github.event.inputs) }}'
           bash .github/scripts/export-envs.sh
 
       - name: Create new repository
         run: |
           echo "Creating repository '$REPOSITORY_NAME' in the organization '$OWNER'"
+          payload=$(jq -n \
+            --arg name "$REPOSITORY_NAME" \
+            --arg description "$REPOSITORY_DESCRIPTION" \
+            --argjson private "$REPOSITORY_PRIVATE" \
+            '{name: $name, description: $description, private: $private}')
           curl --fail-with-body -X POST -H "Authorization: token $GH_TOKEN" \
-            -d "{\"name\":\"$REPOSITORY_NAME\", \"description\":\"$REPOSITORY_DESCRIPTION\", \"private\": $REPOSITORY_PRIVATE}" \
+            -d "$payload" \
             https://api.github.com/orgs/$OWNER/repos
           echo "Repository '$REPOSITORY_NAME' created successfully."
 
@@ -59,8 +65,9 @@ jobs:
 
       - name: Export all workflow inputs as env vars
         shell: bash
+        env:
+          GITHUB_EVENT_INPUTS_JSON: ${{ toJson(github.event.inputs) }}
         run: |
-          export GITHUB_EVENT_INPUTS_JSON='${{ toJson(github.event.inputs) }}'
           bash .github/scripts/export-envs.sh
 
       - name: Clone the newly created repo
@@ -72,7 +79,11 @@ jobs:
       - name: Copy template repo to newly created repo
         run: |
           cd ..
-          rsync -av --exclude='.git' $CURRENT_REPOSITORY_NAME/ $REPOSITORY_NAME/
+          # Exclude the template machinery so it is not propagated into every new repo.
+          rsync -av --exclude='.git' \
+            --exclude='.github/workflows/create-repo.yml' \
+            --exclude='.github/scripts/export-envs.sh' \
+            $CURRENT_REPOSITORY_NAME/ $REPOSITORY_NAME/
 
       - name: Set up JDK
         uses: actions/setup-java@v4

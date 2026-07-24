@@ -1,3 +1,5 @@
+# Example replacer rules for this template repository.
+# See https://github.com/plusminus-software/plusminus-replacer for the syntax.
 - from: plusminus-repository
   to: plusminus-newrepo
 - from: lorem
