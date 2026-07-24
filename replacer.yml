@@ -6,4 +6,4 @@
   to: replaced
 - from: public
   to: private
-  if: ${REPOSITORY_PRIVATE} == 'true'
+  if: REPOSITORY_PRIVATE == 'true'
